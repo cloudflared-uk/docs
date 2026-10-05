@@ -5,7 +5,9 @@ import type { Response, NextFunction } from 'express'
 import type { ExtendedRequest } from '@/types'
 
 const { NODE_ENV } = process.env
-const isDevelopment = NODE_ENV === 'development'
+// Tests and local development run without a prebuilt .next directory. Keep Next in dev mode
+// for all non-production environments so startup does not fail on a missing production build.
+const isDevelopment = NODE_ENV !== 'production'
 
 export const nextApp = next({ dev: isDevelopment })
 export const nextHandleRequest = nextApp.getRequestHandler()
